@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Photo Bomb</string>
+    <string name="process">Process</string>
+    <string name="capture">Capture</string>
+    <string name="test_your_picture_here">Test Your Picture Here</string>
+    <string name="gallery">Gallery</string>
+    <string name="clear">Clear</string>
+    <string name="save">Save</string>
+</resources>
