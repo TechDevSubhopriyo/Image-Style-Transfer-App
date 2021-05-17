@@ -1,11 +1,7 @@
 package com.photo.photobomb;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -31,12 +27,9 @@ import com.photo.photobomb.ml.Cartoongan;
 import org.tensorflow.lite.support.image.TensorImage;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,13 +40,8 @@ public class MainActivity extends AppCompatActivity {
     Button btn,pcs,gal,clr,save;
     Bitmap imageBitmap=null;
     Uri uri=null;
-    Uri photoURI=null;
     int width=0,height=0;
-    String mCurrentPhotoPath;
     private String file_path = null;
-    File photoFile = null;
-    OutputStream outputStream;
-    private static final String IMAGE_DIRECTORY_NAME = "Photo_Bomb";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         clr = findViewById(R.id.clear);
         save = findViewById(R.id.save);
 
-        btn.setOnClickListener(b1-> /*dispatchTakePictureIntent()*/takePicture());
+        btn.setOnClickListener(b1-> takePicture());
         gal.setOnClickListener(g1-> getImageFromStorage());
         pcs.setOnClickListener(p1-> processImage());
         clr.setOnClickListener(c1 ->imageView.setImageBitmap(null));
@@ -87,20 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 == PackageManager.PERMISSION_DENIED && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_DENIED) {
             requestPermissions();
-        }
-    }
-
-    private void saveImage() {
-        if(imageBitmap!=null){
-            String fileName = "Cartoonized_"+System.currentTimeMillis();
-            String savedImageURL = MediaStore.Images.Media.insertImage(
-                    getContentResolver(),
-                    imageBitmap,
-                    fileName,
-                    "Modified By Photo Bomb"
-            );
-            Uri savedImageURI = Uri.parse(savedImageURL);
-            Toast.makeText(this, savedImageURI.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
